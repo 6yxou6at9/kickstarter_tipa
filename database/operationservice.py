@@ -32,7 +32,10 @@ def add_sum_on_campaign_db(campaign_id, summ):
     db = next(get_db())
     if summ:
         campaign = db.query(Campaign).filter_by(id=campaign_id).first()
-        campaign.expected_sum += summ
+        now = campaign.sum_now
+        int(now)
+        now += summ
+        campaign.sum_now = now
         db.commit()
         return True
     return False
