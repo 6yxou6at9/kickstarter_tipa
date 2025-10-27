@@ -11,6 +11,7 @@ class User(Base):
 
     id = Column(Integer, autoincrement=True, primary_key=True)
     username = Column(String, nullable=False)
+    email = Column(String, nullable=False)
     phone_number = Column(String)
     password = Column(String, nullable=False)
     reg_time = Column(DateTime, default=datetime.now)

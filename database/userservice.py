@@ -1,5 +1,6 @@
 from database import get_db
 from database.models import User
+from api.user_api.schemas import UserSchema
 
 
 def get_all_or_exact_user_db(uid=0):
@@ -11,12 +12,13 @@ def get_all_or_exact_user_db(uid=0):
         return db.query(User).all()
     return False
 
-def create_user_db(username, password):
+def create_user_db(user: UserSchema):
     db = next(get_db())
-    new_user = User(username=username, password=password)
+    user_data = user.model_dump()
+    new_user = User(**user_data)
     db.add(new_user)
     db.commit()
-    return True
+    return new_user.id
 
 def add_phone_number_db(user_id, new_phone_number):
     db = next(get_db())
