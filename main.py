@@ -1,11 +1,10 @@
 from fastapi import FastAPI, Request
-from api import user_api, operation_api
-from api.user_api import user_router
-from api.operation_api import operation_router
+from api.user_api.main import user_router
+from api.operation_api.main import operation_router
 from database import Base, engine
 
 
-app = FastAPI(docs_url='/docs', redoc_url='/redoc', title="MyFirstAPI")
+app = FastAPI(docs_url='/docs', redoc_url='/redoc', title="Tipa_Kickstarter_API")
 app.include_router(user_router)
 app.include_router(operation_router)
 Base.metadata.create_all(engine)

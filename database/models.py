@@ -17,7 +17,7 @@ class User(Base):
 
     campaign_fk = relationship('Campaign', back_populates='user_fk', cascade='all, delete-orphan')
     comment_fk = relationship('Comment', back_populates='user_fk', cascade='all, delete-orphan')
-
+    transfer_fk = relationship('Transfer', back_populates='campaign_fk', cascade='all, delete-orphan')
 
 class Campaign(Base):
     __tablename__ = 'campaigns'
@@ -32,6 +32,7 @@ class Campaign(Base):
 
     user_fk = relationship('User', back_populates='campaign_fk', lazy='joined')
     comment_fk = relationship('Comment', back_populates='campaign_fk', cascade='all, delete-orphan')
+    transfer_fk = relationship('Transfer', back_populates='campaign_fk', cascade='all, delete-orphan')
 
 
 class Comment(Base):
@@ -44,3 +45,15 @@ class Comment(Base):
 
     campaign_fk = relationship('Campaign', back_populates='comment_fk', lazy='joined')
     user_fk = relationship('User', back_populates='comment_fk', lazy='joined')
+
+
+class Transfer(Base):
+    __tablename__ = 'transfers'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    transfer_campaign_id = Column(Integer, ForeignKey('campaigns.id', ondelete=CASCADE))
+    transfer_user_id = Column(Integer, ForeignKey('users.id', ondelete=CASCADE))
+    summ = Column(Integer, nullable=False)
+
+    campaign_fk = relationship('Campaign', back_populates='transfer_fk', lazy='joined')
+    user_fk = relationship('User', back_populates='transfer_fk', lazy='joined')

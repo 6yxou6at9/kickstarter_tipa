@@ -29,6 +29,6 @@ async def create_campaign(name, campaign_owner_user_id, description, expected_su
     return {'status': 1, "message": f'Кампэйн {result} создан'}
 
 @operation_router.post('/add_sum_on_campaign')
-async def add_sum_on_campaign(campaign_id, summ):
+async def add_sum_on_campaign(campaign_id: int, summ: int):
     result = add_sum_on_campaign_db(campaign_id=campaign_id, summ=summ)
     return {'status': 1, "message": f'Сумма {result} добавлена'}
