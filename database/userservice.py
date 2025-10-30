@@ -20,7 +20,7 @@ def create_user_db(user: UserSchema):
     db.commit()
     return new_user.id
 
-def add_phone_number_db(user_id, new_phone_number):
+def change_phone_number_db(user_id, new_phone_number):
     db = next(get_db())
     exact_user = db.query(User).filter_by(id=user_id).first()
     exact_user.phone_number = new_phone_number
