@@ -2,8 +2,12 @@ from database import get_db
 from database.models import User
 from api.user_api.schemas import UserSchema
 
+def user_with_id(uid):
+    with next(get_db()) as db:
+        user = db.query(User).filter_by(id=uid).first()
+        return user
 
-def get_all_or_exact_user_db(uid=0):
+def get_all_or_exact_user_db(uid):
     db = next(get_db())
     if uid:
         exact_user = db.query(User).filter_by(id=uid).first()

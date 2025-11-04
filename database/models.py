@@ -17,6 +17,19 @@ class User(Base):
     campaign_fk = relationship('Campaign', back_populates='user_fk', cascade='all, delete-orphan')
     comment_fk = relationship('Comment', back_populates='user_fk', cascade='all, delete-orphan')
     transfer_fk = relationship('Transfer', back_populates='user_fk', cascade='all, delete-orphan')
+    photo_fk = relationship('UserPhoto', back_populates='user_fk', cascade='all, delete-orphan')
+
+
+class UserPhoto(Base):
+    __tablename__ = 'userphotos'
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    photo_path = Column(String, nullable=False)
+    uid = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"))
+    reg_date = Column(DateTime, default=datetime.now())
+
+    user_fk = relationship("User", back_populates="photo_fk", lazy="joined")
+
 
 class Campaign(Base):
     __tablename__ = 'campaigns'
@@ -33,6 +46,18 @@ class Campaign(Base):
     user_fk = relationship('User', back_populates='campaign_fk', lazy='joined')
     comment_fk = relationship('Comment', back_populates='campaign_fk', cascade='all, delete-orphan')
     transfer_fk = relationship('Transfer', back_populates='campaign_fk', cascade='all, delete-orphan')
+    photo_fk = relationship('CampaignPhoto', back_populates='campaign_fk', cascade='all, delete-orphan')
+
+
+class CampaignPhoto(Base):
+    __tablename__ = "campaignphotos"
+
+    id = Column(Integer, autoincrement=True, primary_key=True)
+    photo_path = Column(String, nullable=False)
+    cid = Column(Integer, ForeignKey("campaigns.id", ondelete="CASCADE"))
+    reg_date = Column(DateTime, default=datetime.now())
+
+    campaign_fk = relationship("Campaign", back_populates="photo_fk", lazy="joined")
 
 
 class Comment(Base):

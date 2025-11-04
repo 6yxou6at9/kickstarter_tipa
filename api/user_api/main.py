@@ -10,7 +10,7 @@ def response_result(result):
     return {'status': 0, 'message': result}
 
 @user_router.get('/get_all_or_exact_user_db')
-async def get_all_or_exact_user(uid):
+async def get_all_or_exact_user(uid=0):
     result = get_all_or_exact_user_db(uid=uid)
     return {'status': 1, 'message': result}
 
@@ -19,7 +19,7 @@ async def create_user_api(user: UserSchema):
     result = create_user_db(user)
     return response_result(result)
 
-@user_router.post('/change_phone_number')
+@user_router.put('/change_phone_number')
 async def change_phone_number(user_id, phone_number):
     result = change_phone_number_db(user_id=user_id, new_phone_number=phone_number)
     return response_result(result)
